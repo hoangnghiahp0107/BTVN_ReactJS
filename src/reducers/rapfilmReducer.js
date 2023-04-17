@@ -225,18 +225,12 @@ function rapfilmReducer(state = initialState, action) {
     }
     case "rapfilm/da_Dat":{
       const { soGhe } = action.payload;
-      return state.map((row, index) => {
-        if (index === 0) {
-          return row;
-        }
+      return state.map((row) => {
         return {
           ...row,
           danhSachGhe: row.danhSachGhe.map((ghe) => {
             if (ghe.soGhe === soGhe) {
-              return { 
-                ...ghe,
-                daDat:true
-              };
+              return { ...ghe, daDat:true };
             }
             return ghe;
           })

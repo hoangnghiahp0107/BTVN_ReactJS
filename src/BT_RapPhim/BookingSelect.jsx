@@ -1,4 +1,4 @@
-  import React, {useState} from 'react';
+  import React from 'react';
   import {useSelector, useDispatch} from 'react-redux';
 
   function BookingSelect() {
@@ -10,10 +10,7 @@
     };
     const daDat=(soGhe)=>{
       dispatch({type:"rapfilm/da_Dat",payload:{soGhe}})
-      setTongTien(0);
     }
-    const [tongTien, setTongTien] = useState(0);
-
    
     return (
       <div>
@@ -62,12 +59,19 @@
               <tr>
                 <th style={{ color: "white", border: "1px solid white" }}>Tổng Tiền</th>
                 <th style={{ color: "white", border: "1px solid white" }}>
-                        {data.reduce((tong, row) => {
-                          return tong + row.danhSachGhe.reduce((tongGhe, ghe) => {
-                            return ghe.gheDangChon ? (tongGhe + ghe.gia) : tongGhe;
-                          }, 0);
-                        }, 0)}
-                </th>
+  {data.reduce((tong, row) => {
+    return tong + row.danhSachGhe.reduce((tongGhe, ghe) => {
+      if (ghe.gheDangChon && ghe.daDat) {
+        return tongGhe;
+      } else if (ghe.gheDangChon) {
+        return tongGhe + ghe.gia;
+      } else {
+        return tongGhe;
+      }
+    }, 0);
+  }, 0)}
+</th>
+
                 <th style={{ color: "white", border: "1px solid white" }}>
                 </th>
               </tr>
